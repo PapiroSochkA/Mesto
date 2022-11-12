@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Reflection;
+
 
 namespace WindowsFormsApp1
 {
@@ -16,12 +19,6 @@ namespace WindowsFormsApp1
 
     public partial class Form3 : Form
     {
-
-        private string SQL_AllTable()
-        {
-            return "SELECT * FROM [История] order by 1;";
-        }
-
         private SQLiteConnection OoO;
         private DataTable DT;
         public Form3()
@@ -33,7 +30,8 @@ namespace WindowsFormsApp1
         {
             DT = new DataTable();
             OoO = new SQLiteConnection();
-            OoO = new SQLiteConnection("Data Source=C:\\Users\\chist\\Desktop\\OoO\\OoO.db; Pooling=true;FailIfMissing=false; Version=3;");
+            string path = string.Concat(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"\OoO.db");
+            OoO = new SQLiteConnection("Data Source=" + path + "; Version=3;");
             OoO.Open();
             string SQLi = "SELECT *FROM История";
            

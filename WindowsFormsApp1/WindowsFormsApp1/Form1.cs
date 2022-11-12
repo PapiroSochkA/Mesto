@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using System.IO;
+using System.Reflection;
 
 namespace WindowsFormsApp1
 {
@@ -184,10 +186,17 @@ namespace WindowsFormsApp1
             //OoO = new SQLiteConnection("Data Source=C:\\Users\\chist\\Desktop\\OoO\\OoO.db; Pooling=true;FailIfMissing=false; Version=3;");
             //OoO.Open();
         }
+        private void ConnectDB()
+        {
+            string path = string.Concat(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"\OoO.db");
+
+            OoO = new SQLiteConnection("Data Source=" + path + "; Version=3;");
+        }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            OoO = new SQLiteConnection("Data Source=C:\\Users\\chist\\Desktop\\OoO\\OoO.db; Pooling=true;FailIfMissing=false; Version=3;");
+            string path = string.Concat(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"\OoO.db");
+            OoO = new SQLiteConnection("Data Source=" + path + "; Version=3;");
             OoO.Open();
             string SQL = "INSERT INTO История (Пароли)"+" VALUES(' " + richTextBox1.Text.ToString() + "')";
             SQLiteCommand cmd = new SQLiteCommand(SQL);
